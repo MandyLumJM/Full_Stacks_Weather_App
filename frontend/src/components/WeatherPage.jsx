@@ -1,31 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import WeatherForm from './WeatherForm';
-import HistoryList from './HistoryList';
-import { fetchHistory as fetchHistoryApi, fetchWeather as fetchWeatherApi, deleteSearch as deleteSearchApi } from '../api';
+import React, { useState, useEffect } from "react";
+import WeatherForm from "./WeatherForm";
+import HistoryList from "./HistoryList";
+import {
+  fetchHistory as fetchHistoryApi,
+  fetchWeather as fetchWeatherApi,
+  deleteSearch as deleteSearchApi,
+} from "../api";
 
 function WeatherPage() {
   const [history, setHistory] = useState([]);
+  const [weather, setWeather] = useState(null);
+  const [weatherError, setWeatherError] = useState("");
 
   useEffect(() => {
     fetchHistoryList();
   }, []);
 
-  const fetchWeather = async (city, country, extra) => {
-    const { setWeather, setError } = extra;
+  const validateInput = (city, country) => {
+    let validationResult = true;
 
-    if (!city) setError("City is mandatory!");
-    if (!country) setError("Country is mandatory!");
+    if (!city.trim() && !country.trim()) {
+      setWeatherError("City and Country are mandatory!");
+      validationResult = false;
+    } else if (!city.trim()) {
+      setWeatherError("City is mandatory!");
+      validationResult = false;
+    } else if (!country.trim()) {
+      setWeatherError("Country is mandatory!");
+      validationResult = false;
+    }
 
-    try {
-      const response = await fetchWeatherApi(city, country);
+    return validationResult;
+  };
 
-      if (response && Object.keys(response).length > 0) {
-        setWeather(response);
-        setError('');
-        fetchHistoryList();
+  const fetchWeather = async (city, country) => {
+    const validationResult = validateInput(city, country);
+
+    if (validationResult) {
+      try {
+        const response = await fetchWeatherApi(city, country);
+
+        if (response && Object.keys(response).length > 0) {
+          setWeather(response);
+          setWeatherError("");
+          fetchHistoryList();
+        }
+      } catch (err) {
+        setWeatherError("Not Found!");
       }
-    } catch (err) {
-      setError('Invalid city or country');
     }
   };
 
@@ -33,7 +55,6 @@ function WeatherPage() {
     const response = await fetchHistoryApi();
 
     if (response && Array.isArray(response)) {
-      console.log(`fetchHistoryList:: ${response}`)
       setHistory(response);
     }
   };
@@ -44,10 +65,19 @@ function WeatherPage() {
   };
 
   return (
-    <div className="container">
-      <h1 className="text-center">Weather App</h1>
-      <WeatherForm fetchWeather={fetchWeather} />
-      <HistoryList history={history} deleteHistory={deleteHistory} />
+    <div className="card px-4 pt-4 my-4">
+      <h3 className="border-bottom">Today's Weather</h3>
+      <WeatherForm
+        fetchWeather={fetchWeather}
+        weather={weather}
+        error={weatherError}
+      />
+      <HistoryList
+        history={history}
+        deleteHistory={deleteHistory}
+        fetchWeather={fetchWeather}
+        updateWeather={setWeather}
+      />
     </div>
   );
 }
