@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=localhost
+      - DB_USER=root
+      - DB_PASSWORD=admin123
+      - DB_NAME=weather_app
+      - OPENWEATHER_API_KEY=8b279222e23fbb873eba6f12791013f5
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: weather_app
+    ports:
+      - "3306:3306"
