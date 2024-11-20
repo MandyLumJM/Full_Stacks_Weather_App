@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { connect } = require('./db');
+const { connectToDatabase } = require('./db');
 const weatherRoutes = require('./routes/weatherRoutes');
 
 require('dotenv').config();
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection
-connect();
+connectToDatabase();
 
 // Routes
 app.use('/api/weather', weatherRoutes);

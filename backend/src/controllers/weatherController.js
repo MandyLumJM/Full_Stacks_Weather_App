@@ -3,6 +3,7 @@ const { saveHistory, getHistory, deleteHistory } = require('../models/historyMod
 
 const getWeather = async (req, res) => {
   const { city, country } = req.query;
+
   if (!city || !country) {
     return res.status(400).json({ message: 'City and Country are required' });
   }
@@ -19,10 +20,15 @@ const getWeather = async (req, res) => {
       condition: weatherData.weather[0].description,
     });
 
-    // Save search history
-    await saveHistory(weatherData.name, weatherData.sys.country);
+    saveHistory(weatherData.name, weatherData.sys.country).catch((err) => {
+      console.error('Failed to save history:', err);
+    });
+
   } catch (error) {
-    res.status(400).json({ message: 'Invalid City or Country' });
+    // Ensure response is sent only once
+    if (!res.headersSent) {
+      return res.status(400).json({ message: 'Invalid City or Country' });
+    }
   }
 };
 
