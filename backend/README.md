@@ -14,10 +14,12 @@ This directory contains the source code for the Node.js-based backend of the Wea
 1. **Install Dependencies**  
    Navigate to the `backend` directory and run:
    ```bash
+   bash
    npm install
 
 2. **Start Local**
    ```bash
+   bash
    npm start
 
 3. **Run with Docker**
@@ -35,6 +37,7 @@ This directory contains the source code for the Node.js-based backend of the Wea
 
  4. Build and run the backend as a container:
      ```bash
+    bash
     docker build -t weather_app_backend .
     docker run -p 5000:5000 --env-file .env weather_app_backend
       
