@@ -14,7 +14,8 @@ const WeatherForm = (props) => {
   const [country, setCountry] = useState("");
   const [fetchLoading, setFetchLoading] = useState(false);
 
-  const onHandleFetchWeather = async () => {
+  const onHandleFetchWeather = async (event) => {
+    event.preventDefault();
     if (fetchWeather) {
       setFetchLoading(true);
       await fetchWeather(city, country);
@@ -29,59 +30,63 @@ const WeatherForm = (props) => {
 
   return (
     <div className="pb-3">
-      <div className="row g-3">
-        <div className="col-md-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
+      <form onSubmit={onHandleFetchWeather}>
+        <div className="row g-3">
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
+          <div className="col-md-2">
+            <button
+              type="submit"
+              className="btn btn-primary w-100"
+              disabled={fetchLoading}
+            >
+              {fetchLoading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-1"
+                    role="status"
+                  ></span>
+                  Loading...
+                </>
+              ) : (
+                <>Search</>
+              )}
+            </button>
+          </div>
+          <div className="col-md-2">
+            <button
+              className="btn btn-secondary w-100"
+              type="button"
+              onClick={onHandleClearInput}
+            >
+              Clear
+            </button>
+          </div>
         </div>
-        <div className="col-md-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </div>
-        <div className="col-md-2">
-          <button
-            className="btn btn-primary w-100"
-            onClick={onHandleFetchWeather}
-            disabled={fetchLoading}
-          >
-            {fetchLoading ? (
-              <>
-                <span
-                  className="spinner-border spinner-border-sm me-1"
-                  role="status"
-                ></span>
-                Loading...
-              </>
-            ) : (
-              <>Search</>
-            )}
-          </button>
-        </div>
-        <div className="col-md-2">
-          <button
-            className="btn btn-secondary w-100"
-            onClick={onHandleClearInput}
-          >
-            Clear
-          </button>
-        </div>
-      </div>
+      </form>
+
       {error && <div className="text-danger mt-3">{error}</div>}
       {weather && (
         <div className="mt-4">
           <div className="container">
             <div className="row">
-              <div className="col">
+              <div className="col text-secondary">
                 <span>
                   {cityWeather}, {countryWeather}
                 </span>
@@ -93,7 +98,7 @@ const WeatherForm = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-3">
+              <div className="col-3 text-secondary">
                 <div>Description:</div>
               </div>
               <div className="col-9">
@@ -101,7 +106,7 @@ const WeatherForm = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-3">
+              <div className="col-3 text-secondary">
                 <div>Temperature:</div>
               </div>
               <div className="col-9">
@@ -109,7 +114,7 @@ const WeatherForm = (props) => {
               </div>
             </div>
             <div className="row">
-              <div className="col-3">
+              <div className="col-3 text-secondary">
                 <div>Time:</div>
               </div>
               <div className="col-9">
