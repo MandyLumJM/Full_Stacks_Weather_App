@@ -15,19 +15,16 @@ This directory contains the source code for the React-based frontend of the Weat
 
    Navigate to the `frontend` directory and run:
    ```bash
-   bash
    npm install
 
 2. **Start Local**
    ```bash
-   bash
    npm start
 
 3. **Run with Docker**
   
    Build and run the frontend as a container:
    ```bash
-   bash
    docker build -t weather_app_frontend .
    docker run -p 3000:3000 weather_app_frontend
 

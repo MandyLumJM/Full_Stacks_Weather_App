@@ -30,7 +30,6 @@ Ensure you have the following installed:
 Run the following command:
 
 ```bash
-bash
 docker-compose up --build
 ```
 
@@ -65,6 +64,5 @@ If ports are already in use, modify the ports section in docker-compose.yml.
 
 Verify the frontend container is running and check the logs using:
 ```bash
-bash
 docker logs weather_app_frontend
 ```
