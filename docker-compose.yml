@@ -1,0 +1,46 @@
+services:
+  weather_app_db:
+    image: mysql:8.0
+    container_name: weather_app_db
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: weather_app
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./data/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin123"]
+      interval: 1s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+    container_name: weather_app_backend
+    environment:
+      DB_HOST: weather_app_db
+      DB_USER: root
+      DB_PASSWORD: admin123
+      DB_NAME: weather_app
+      OPENWEATHER_API_KEY: 8b279222e23fbb873eba6f12791013f5
+    ports:
+      - "5000:5000"
+    depends_on:
+      - weather_app_db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: weather_app_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+
+
