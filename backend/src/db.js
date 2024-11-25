@@ -11,9 +11,9 @@ async function connectToDatabase() {
     try {
       // Attempt to connect to the database
       connection = await mysql.createConnection({
-        host: 'weather_app_db', 
-        user: 'root',
-        password: 'admin123',
+        host: process.env.DB_HOST || 'weather_app_db', 
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || 'admin123',
         database: 'weather_app'
       });
 

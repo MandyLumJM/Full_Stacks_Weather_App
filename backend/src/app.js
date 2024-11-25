@@ -3,7 +3,7 @@ const cors = require('cors');
 const { connectToDatabase } = require('./db');
 const weatherRoutes = require('./routes/weatherRoutes');
 
-require('dotenv').config();
+require('dotenv').config() || 'local';
 
 const app = express();
 const PORT = process.env.PORT || 5000;

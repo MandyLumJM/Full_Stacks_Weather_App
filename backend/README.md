@@ -11,36 +11,26 @@ This directory contains the source code for the Node.js-based backend of the Wea
 
 
 ## **Setup Instructions**
-1. **Install Dependencies**  
+1. **Install Dependencies**
+
    Navigate to the `backend` directory and run:
    ```bash
    npm install
+   ```
 
-2. **Start Local**
+2. **Create `.env` file**
+    ```
+    - NODE_ENV=local
+    - PORT=5000
+    - OPENWEATHER_API_KEY=8b279222e23fbb873eba6f12791013f5
+    - DB_HOST=weather_app_db
+    - DB_USER=root
+    - DB_PASSWORD=admin123
+    - DB_PORT=3306
+    - DB_NAME=weather_db
+    ```
+
+3. **Start Local**
    ```bash
    npm start
-
-3. **Run with Docker**
-  
-   Create a `.env file` in the backend directory and include:
-
-   ```env
-   NODE_ENV=production
-   PORT=3000
-   OPENWEATHER_API_KEY=your_openweathermap_api_key
-   DB_HOST=mysql
-   DB_USER=root
-   DB_PASSWORD=my_password
-   DB_NAME=weather_db
-
- 4. Build and run the backend as a container:
-    ```bash
-    docker build -t weather_app_backend .
-    docker run -p 5000:5000 --env-file .env weather_app_backend
-      
-
-## **Key Features**
-- **Responsive Design**: Built with Bootstrap for compatibility across screen sizes.
-- **Weather Search**: Fetch and display weather information based on city and country.
-- **Search History**: Show previously searched locations.
-- **Error Handling**: Notify users of invalid inputs or API errors.
+   ```

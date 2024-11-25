@@ -1,4 +1,4 @@
-# **Full_Stacks_Weather_App**
+# **Weather App**
 
 A weather application that allows users to fetch and display current weather information for a specific city and country. The application is containerized using Docker for seamless setup and deployment.
 
@@ -24,7 +24,6 @@ A weather application that allows users to fetch and display current weather inf
 Ensure you have the following installed:
 - Node.js (v16 or later)
 - Docker and Docker Compose installed on your system.
-- OpenWeatherMap API Key (register at [OpenWeatherMap](https://openweathermap.org/)).
 
 ### **Build and Start the Application**
 Run the following command:
@@ -34,9 +33,8 @@ docker-compose up --build
 ```
 
 This will:
-
-Start MySQL, backend, and frontend services.
-Apply any initialization scripts in data/mysql.
+- Start MySQL, backend, and frontend services.
+- Apply any initialization scripts in data/mysql.
 
 
 ### **Access the Application**
@@ -53,10 +51,11 @@ Backend: http://localhost:5000
 
 ## **Troubleshooting**
 **Database Connection Issues**:
-Ensure the MySQL container is running.
-```
-Verify DB_HOST, DB_USER, and DB_PASSWORD in docker-compose.yml and db.js are correct.
-```
+
+- Ensure the MySQL container is running.
+
+- Verify DB_HOST, DB_USER, and DB_PASSWORD in docker-compose.yml and db.js are correct.
+
 **Docker Issues**:
 If ports are already in use, modify the ports section in docker-compose.yml.
 
